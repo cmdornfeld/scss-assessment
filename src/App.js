@@ -27,6 +27,7 @@ function App() {
 
   return (
     <div className="App">
+      {JSON.stringify([segmentIndex, currentSegment])}
       {
         currentSegment.type === 'single-select' && 
         <SingleSelect data={currentSegment} onComplete={handleSegmentComplete}/>

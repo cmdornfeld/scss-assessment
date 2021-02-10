@@ -20,13 +20,14 @@ const MultiSelect = props => {
     const [selected, setSelected] = useState(-1);
 
     const handleSelect = (i) => {
-        if(selected === -1) setSelected(i)
+        if(selected === -1) setSelected(...i)
     }
 
     const selectedOption = props.data.options[selected]
 
     return (
         <div className={`MultiSelect`}>
+            {JSON.stringify([selected, props])}
             <h1>
                 {props.data.questionText}
             </h1>
@@ -36,7 +37,7 @@ const MultiSelect = props => {
                     return <button onClick={()=>{handleSelect(optionIndex)}}>{option.text}</button>
                 })
             }
-            {
+            {/* {
                 selected > -1 &&
                 <div className={`feedback ${selectedOption.correct ? 'correct' : 'incorrect'}`}>
                     <h1>
@@ -55,7 +56,7 @@ const MultiSelect = props => {
                     </p>
                     <button onClick={props.onComplete}>OK</button>
                 </div>
-            }
+            } */}
         </div>
     )
 }
