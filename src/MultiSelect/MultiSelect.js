@@ -37,9 +37,6 @@ const MultiSelect = ({data, onComplete}) => {
         const userAnswer = answers.filter(option => {
             return option.correct === true;
         })
-
-        console.log(correctAnswer);
-        console.log(userAnswer);
         
         if (userAnswer.length === correctAnswer.length && answers.length === userAnswer.length){
             setStep(0);
@@ -54,13 +51,12 @@ const MultiSelect = ({data, onComplete}) => {
 
     return (
         <div className={`MultiSelect`}>
-            {JSON.stringify([answers, data])}
             <h1 className={`question-header`}>
                 {data.questionText}
             </h1>
             {
                 data.options.map((option, optionIndex) => {
-                    return <button onClick={()=>{handleAnswerSelection(optionIndex)}}>{option.selection}. {option.text}</button>
+                    return <button onClick={()=>{handleAnswerSelection(optionIndex)}} key={optionIndex}>{option.selection}. {option.text}</button>
                 })
             }
             <button onClick={()=>{console.log(checkAnswer(answers))}}>Submit</button>
