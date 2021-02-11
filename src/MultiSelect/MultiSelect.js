@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react'
-import './MultiSelect.scss'
+import React, {useState, useEffect} from 'react';
+import './MultiSelect.scss';
 
 // this is a stub for you to develop the following
 
 /*
-    PART 2 - OPTIONAL 
+    PART 2 - OPTIONAL
     
     Develop a component similar to the single select that allows multiple options to be selected. 
 
@@ -15,48 +15,75 @@ import './MultiSelect.scss'
     The generic feedback shown in the data is binary - either you got it 100% correct and get the correct feedback, or you don't. 
 */
 
-const MultiSelect = props => {
+const MultiSelect = ({data, onComplete}) => {
 
-    const [selected, setSelected] = useState(-1);
+    const [answers, setAnswers] = useState([]);
+    const [step, setStep] = useState(-1);
+    const [feedback, setFeedback] = useState(null);
 
-    const handleSelect = (i) => {
-        if(selected === -1) setSelected(...i)
+    const handleAnswerSelection = (i) => {
+        if(!answers.includes(data.options[i])){
+            let newAnswers = [...answers, data.options[i]];
+            setAnswers(newAnswers);
+        } else {
+            return answers;
+        }
     }
 
-    const selectedOption = props.data.options[selected]
+    const checkAnswer = (answer) => {
+        const correctAnswer = data.options.filter(option => {
+            return option.correct === true;
+        })
+        const userAnswer = answers.filter(option => {
+            return option.correct === true;
+        })
+
+        console.log(correctAnswer);
+        console.log(userAnswer);
+        
+        if (userAnswer.length === correctAnswer.length && answers.length === userAnswer.length){
+            setStep(0);
+            setFeedback('correct');
+            return true;
+        } else {
+            setStep(0);
+            setFeedback('incorrect')
+            return false;
+        }
+    }
 
     return (
         <div className={`MultiSelect`}>
-            {JSON.stringify([selected, props])}
-            <h1>
-                {props.data.questionText}
+            {JSON.stringify([answers, data])}
+            <h1 className={`question-header`}>
+                {data.questionText}
             </h1>
             {
-                selected === -1 &&
-                props.data.options.map((option, optionIndex) => {
-                    return <button onClick={()=>{handleSelect(optionIndex)}}>{option.text}</button>
+                data.options.map((option, optionIndex) => {
+                    return <button onClick={()=>{handleAnswerSelection(optionIndex)}}>{option.selection}. {option.text}</button>
                 })
             }
-            {/* {
-                selected > -1 &&
-                <div className={`feedback ${selectedOption.correct ? 'correct' : 'incorrect'}`}>
+            <button onClick={()=>{console.log(checkAnswer(answers))}}>Submit</button>
+            {
+                step > -1 &&
+                <div className={`feedback ${feedback}`}>
                     <h1>
-                        {selectedOption.correct ?
-                            props.data.feedback.correct.header
+                        {feedback === 'correct' ?
+                            data.feedback.correct.header
                         :
-                            props.data.feedback.incorrect.header
+                            data.feedback.incorrect.header
                         }
                     </h1>
                     <p>
-                        {selectedOption.correct ?
-                            props.data.feedback.correct.body
+                        {feedback === 'correct' ?
+                            data.feedback.correct.body
                         :
-                            props.data.feedback.incorrect.body
+                            data.feedback.incorrect.body
                         }
                     </p>
-                    <button onClick={props.onComplete}>OK</button>
+                    <button onClick={onComplete}>OK</button>
                 </div>
-            } */}
+            }
         </div>
     )
 }

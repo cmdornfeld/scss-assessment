@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import './SingleSelect.scss'
+import React, {useState, useEffect} from 'react';
+import './SingleSelect.scss';
 
 const SingleSelect = props => {
 
@@ -24,13 +24,13 @@ const SingleSelect = props => {
 
     return (
         <div className={`SingleSelect`}>
-            <h1>
+            <h1 className={`question-header`}>
                 {props.data.questionText}
             </h1>
             {
                 selected === -1 &&
                 props.data.options.map((option, optionIndex) => {
-                    return <button onClick={()=>{handleSelect(optionIndex)}}>{option.text}</button>
+                    return <button onClick={()=>{handleSelect(optionIndex)}}>{option.selection}. {option.text}</button>
                 })
             }
             {

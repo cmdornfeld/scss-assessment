@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import data from './activity.json'
+import React, {useState} from 'react';
+import data from './activity.json';
 import MultiSelect from './MultiSelect/MultiSelect';
 import SingleSelect from './SingleSelect/SingleSelect';
 import './global-styles.scss';
