@@ -26,7 +26,8 @@ const MultiSelect = ({data, onComplete}) => {
             let newAnswers = [...answers, data.options[i]];
             setAnswers(newAnswers);
         } else {
-            return answers;
+            let newAnswers = answers.filter(answer => answer !== data.options[i]);
+            setAnswers(newAnswers);
         }
     }
 
@@ -51,6 +52,7 @@ const MultiSelect = ({data, onComplete}) => {
 
     return (
         <div className={`MultiSelect`}>
+            {JSON.stringify(answers)}
             <h1 className={`question-header`}>
                 {data.questionText}
             </h1>
